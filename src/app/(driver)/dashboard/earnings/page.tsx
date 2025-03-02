@@ -1,3 +1,3 @@
 export default function Earnings() {
-    return <h1>Earnings</h1>;
-  }
+  return <h1>Earnings</h1>
+}

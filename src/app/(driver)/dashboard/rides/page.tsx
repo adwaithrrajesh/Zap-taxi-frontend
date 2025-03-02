@@ -1,3 +1,3 @@
 export default function DriverRides() {
-    return <h1>Driver Rides</h1>;
-  }
+  return <h1>Driver Rides</h1>
+}

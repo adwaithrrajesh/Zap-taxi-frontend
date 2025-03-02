@@ -8,33 +8,48 @@
     "start": "next start",
     "lint": "next lint",
     "test": "echo \"No tests available\" && exit 0",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.8",
+    "@react-three/drei": "^10.0.3",
+    "@react-three/fiber": "^9.0.4",
     "framer-motion": "^12.4.7",
     "lucide-react": "^0.477.0",
     "next": "15.2.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "three": "^0.174.0"
   },
-  
   "lint-staged": {
-  "**/*.{ts,tsx,js,jsx}": [
-    "eslint --fix",
-    "prettier --write"
-  ]
+    "**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "compilerOptions": {
+    "types": [
+      "google.maps"
+    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/google.maps": "^3.58.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.174.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-prettier": "^5.2.3",
     "husky": "^8.0.0",
     "lint-staged": "^15.4.3",
     "postcss": "^8.5.3",

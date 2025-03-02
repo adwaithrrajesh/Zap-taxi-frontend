@@ -1,5 +1,5 @@
 'use client'
-import { useTheme } from '@/app/hooks/useTheme'
+import { useTheme } from '@hooks/useTheme'
 
 export default function Footer() {
   const { darkMode } = useTheme()

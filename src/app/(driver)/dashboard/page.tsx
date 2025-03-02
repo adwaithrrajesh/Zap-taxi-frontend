@@ -1,3 +1,3 @@
 export default function DriverDashboard() {
-    return <h1>Driver Dashboard</h1>;
-  }
+  return <h1>Driver Dashboard</h1>
+}
