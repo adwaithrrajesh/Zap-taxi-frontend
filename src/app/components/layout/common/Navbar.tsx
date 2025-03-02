@@ -1,18 +1,20 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun } from "lucide-react";
-import useDarkMode from "@/app/hooks/useDarkMode";
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu, X, Moon, Sun } from 'lucide-react'
+import { useTheme } from '@/app/hooks/useTheme'
+
+const navItems = ['Ride', 'Drive', 'Business', 'Help']
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const [isOpen, setIsOpen] = useState(false)
+  const { darkMode, toggleDarkMode } = useTheme()
 
   return (
     <nav
       className={`px-6 py-4 shadow-md transition-colors duration-500 ${
-        darkMode ? "bg-black text-white" : "bg-white text-black"
+        darkMode ? 'bg-black text-white' : 'bg-white text-black'
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -21,54 +23,13 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-6 text-lg font-medium">
-          {["Ride", "Drive", "Business", "Help"].map((item) => (
-            <li key={item} className="hover:text-gray-400 cursor-pointer">
-              {item}
-            </li>
-          ))}
+          <MenuItems onClick={() => setIsOpen(false)} />
         </ul>
 
-        {/* Right Side - Login/Signup & Dark Mode Toggle */}
+        {/* Desktop Right Section (Auth Buttons & Dark Mode) */}
         <div className="hidden md:flex items-center space-x-4">
-          <button className="border px-4 py-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition">
-            Login
-          </button>
-          <button className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-700 transition dark:bg-white dark:text-black dark:hover:bg-gray-300">
-            Sign Up
-          </button>
-
-          {/* Dark Mode Toggle */}
-          <motion.button
-            onClick={toggleDarkMode}
-            className={`p-2 rounded-full transition-colors duration-300 ${
-              darkMode ? "bg-gray-800 text-white" : "bg-gray-200 text-black"
-            }`}
-            whileTap={{ scale: 0.8 }}
-          >
-            <AnimatePresence mode="wait">
-              {darkMode ? (
-                <motion.div
-                  key="sun"
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Sun size={22} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="moon"
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Moon size={22} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+          <AuthButtons />
+          <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
         </div>
 
         {/* Mobile Menu Button */}
@@ -80,65 +41,123 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.ul
-            initial={{ opacity: 0, y: -10 }}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className={`md:hidden flex flex-col p-4 mt-2 space-y-4 ${
-              darkMode ? "bg-black text-white" : "bg-white text-black"
-            }`}
+            className={`md:hidden absolute top-16 left-0 w-full py-4 px-6 ${
+              darkMode ? 'bg-black text-white' : 'bg-white text-black'
+            } shadow-md`}
           >
-            {["Ride", "Drive", "Business", "Help"].map((item) => (
-              <li key={item} className="hover:text-gray-400 cursor-pointer">
-                {item}
-              </li>
-            ))}
-            <li>
-              <button className="border px-4 py-2 w-full rounded-full hover:bg-gray-200 dark:hover:bg-gray-800">
-                Login
-              </button>
-            </li>
-            <li>
-              <button className="bg-black text-white px-4 py-2 w-full rounded-full hover:bg-gray-700 transition dark:bg-white dark:text-black dark:hover:bg-gray-300">
-                Sign Up
-              </button>
-            </li>
-            {/* Dark Mode Toggle for Mobile */}
-            <li className="flex justify-center">
-              <motion.button
-                onClick={toggleDarkMode}
-                className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 transition-colors duration-300"
-                whileTap={{ scale: 0.8 }}
-              >
-                <AnimatePresence mode="wait">
-                  {darkMode ? (
-                    <motion.div
-                      key="sun"
-                      initial={{ opacity: 0, rotate: -90 }}
-                      animate={{ opacity: 1, rotate: 0 }}
-                      exit={{ opacity: 0, rotate: 90 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Sun size={22} />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="moon"
-                      initial={{ opacity: 0, rotate: -90 }}
-                      animate={{ opacity: 1, rotate: 0 }}
-                      exit={{ opacity: 0, rotate: 90 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <Moon size={22} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-            </li>
-          </motion.ul>
+            <ul className="flex flex-col space-y-4 text-lg font-medium">
+              <MenuItems onClick={() => setIsOpen(false)} />
+            </ul>
+
+            <div className="mt-4 flex flex-col space-y-2">
+              <AuthButtons />
+            </div>
+
+            {/* Dark Mode Toggle (Mobile) */}
+            <DarkModeToggle
+              darkMode={darkMode}
+              toggleDarkMode={toggleDarkMode}
+              isMobile
+            />
+          </motion.div>
         )}
       </AnimatePresence>
     </nav>
-  );
+  )
+}
+
+/* --------------------------------
+ * REUSABLE COMPONENTS
+ * -------------------------------- */
+
+function MenuItems({ onClick }: { onClick: () => void }) {
+  return (
+    <>
+      {navItems.map((item) => (
+        <li
+          key={item}
+          className="hover:text-gray-400 cursor-pointer"
+          onClick={onClick}
+        >
+          {item}
+        </li>
+      ))}
+    </>
+  )
+}
+
+function AuthButtons() {
+  const { darkMode } = useTheme()
+
+  return (
+    <>
+      <button
+        className={`px-4 py-2 rounded-full transition border ${
+          darkMode
+            ? 'bg-black text-white border-white hover:bg-white hover:text-black hover:border-black'
+            : 'bg-white text-black border-black hover:bg-black hover:text-white hover:border-white'
+        }`}
+      >
+        Login
+      </button>
+      <button
+        className={`px-4 py-2 rounded-full transition border ${
+          darkMode
+            ? 'bg-black text-white border-white hover:bg-white hover:text-black hover:border-black'
+            : 'bg-white text-black border-black hover:bg-black hover:text-white hover:border-white'
+        }`}
+      >
+        Sign Up
+      </button>
+    </>
+  )
+}
+
+function DarkModeToggle({
+  darkMode,
+  toggleDarkMode,
+  isMobile = false,
+}: {
+  darkMode: boolean
+  toggleDarkMode: () => void
+  isMobile?: boolean
+}) {
+  return (
+    <motion.button
+      onClick={toggleDarkMode}
+      className={`p-2 rounded-full transition-colors duration-300 ${
+        darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'
+      } ${isMobile ? 'mt-4 w-full flex justify-center' : ''}`}
+      whileTap={{ scale: 0.8 }}
+    >
+      <AnimatePresence mode="wait">
+        {darkMode ? (
+          <motion.div
+            key={isMobile ? 'sun-mobile' : 'sun'}
+            initial={{ opacity: 0, rotate: -90 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            exit={{ opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Sun size={22} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key={isMobile ? 'moon-mobile' : 'moon'}
+            initial={{ opacity: 0, rotate: -90 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            exit={{ opacity: 0, rotate: 90 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Moon size={22} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.button>
+  )
 }
