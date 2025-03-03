@@ -3,10 +3,11 @@
 import { useState } from 'react'
 import { useTheme } from '@hooks/useTheme'
 import { motion } from 'framer-motion'
-import { FaGoogle, FaApple } from 'react-icons/fa'
+import { FaApple } from 'react-icons/fa'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { AppProviders } from '@providers/AppProviders'
 import { useRouter } from 'next/navigation'
+import { FcGoogle } from 'react-icons/fc'
 
 function LoginPageContent() {
   const { darkMode } = useTheme()
@@ -97,20 +98,35 @@ function LoginPageContent() {
 
         {/* Social Login Buttons */}
         <div className="flex flex-col space-y-3">
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             className="flex items-center justify-center w-full py-3 border border-gray-300 dark:border-gray-600 rounded-lg transition"
           >
             <FaGoogle className="mr-2" /> Sign in with Google
+          </motion.button> */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`flex-1 flex items-center justify-center py-2 rounded-lg border transition ${
+              darkMode
+                ? 'bg-black text-white border-gray-600'
+                : 'bg-white text-black border-gray-300'
+            }`}
+          >
+            <FcGoogle className="mr-2 text-xl" /> Sign in With Google
           </motion.button>
 
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="flex items-center justify-center w-full py-3 border border-gray-300 dark:border-gray-600 rounded-lg transition"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`flex-1 flex items-center justify-center py-2 rounded-lg border transition ${
+              darkMode
+                ? 'bg-black text-white border-gray-600'
+                : 'bg-white text-black border-gray-300'
+            }`}
           >
-            <FaApple className="mr-2 text-white" /> Sign in with Apple
+            <FaApple className="mr-2 text-xl" /> Sign in with Apple
           </motion.button>
         </div>
 
@@ -126,7 +142,9 @@ function LoginPageContent() {
             Don't have an account?{' '}
             <button
               onClick={() => router.push('/register')}
-              className="text-black dark:text-white font-medium hover:underline"
+              className={`text-sm transition ${
+                darkMode ? 'text-white hover:text-gray-300' : 'text-black hover:text-gray-700'
+              }`}
             >
               Sign Up
             </button>

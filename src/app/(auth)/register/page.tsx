@@ -149,11 +149,21 @@ function RegisterContent() {
         {/* Terms & Conditions */}
         <p className="text-gray-500 text-sm text-center mt-3">
           By signing up, you agree to our{' '}
-          <a href="#" className="text-black dark:text-white font-medium hover:underline">
+          <a
+            href="#"
+            className={`text-sm transition ${
+              darkMode ? 'text-white hover:text-gray-300' : 'text-black hover:text-gray-700'
+            }`}
+          >
             Terms
           </a>{' '}
           &{' '}
-          <a href="#" className="text-black dark:text-white font-medium hover:underline">
+          <a
+            href="#"
+            className={`text-sm transition ${
+              darkMode ? 'text-white hover:text-gray-300' : 'text-black hover:text-gray-700'
+            }`}
+          >
             Privacy Policy
           </a>
           .
@@ -165,7 +175,9 @@ function RegisterContent() {
             Already have an account?{' '}
             <button
               onClick={() => router.push('/login')}
-              className="text-black dark:text-white font-medium hover:underline"
+              className={`text-sm transition ${
+                darkMode ? 'text-white hover:text-gray-300' : 'text-black hover:text-gray-700'
+              }`}
             >
               Log In
             </button>
